@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
-const databaseUrl = process.env.DATABASE_URL || 'mongodb+srv://<username>:<password>@argentbank.gqfqj7y.mongodb.net/?retryWrites=true&w=majority';
+const databaseUrl = "mongodb+srv://SteveRogers:password456@argentbank.gqfqj7y.mongodb.net/?retryWrites=true&w=majority" // process.env.DATABASE_URL ;
+console.log(databaseUrl)
 
 module.exports = async () => {
   try {
