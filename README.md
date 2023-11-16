@@ -17,8 +17,14 @@ Please make sure you have the right versions and download both packages. You can
 # Check Node.js version
 node --version
 
+https://www.freecodecamp.org/news/node-version-manager-nvm-install-guide/
+
 # Check Mongo version
 mongo --version
+
+MongoDB en local
+ou 
+Mongo Atlas
 ```
 
 ### Instructions
