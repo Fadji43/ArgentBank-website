@@ -5,7 +5,7 @@ import { faUserCircle, faSignOut } from '@fortawesome/free-solid-svg-icons';
 import logo from '../img/argentBankLogo.png';
 import '../css/main.css';
 
-function Header() {
+function HeaderConnect() {
   return (
 <nav class="main-nav">
       <Link to="/" class="main-nav-logo" href="./index.html">
@@ -30,4 +30,4 @@ function Header() {
     );
   }
       
-export default Header;
+export default HeaderConnect;
