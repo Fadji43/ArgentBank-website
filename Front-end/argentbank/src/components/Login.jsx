@@ -3,7 +3,7 @@ import { useDispatch } from 'react-redux';
 import { loginSuccess, loginFailure } from '../actions/loginActions';
 
 const Login = () => {
-  const [userName, setUserName] = useState(''); // Modifié ici
+  const [email, setUserName] = useState(''); 
   const [password, setPassword] = useState('');
   const dispatch = useDispatch();
 
@@ -14,7 +14,7 @@ const Login = () => {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ userName, password }), // Modifié ici
+        body: JSON.stringify({ email:email, password }), 
       });
 
       const data = await response.json();
@@ -22,28 +22,27 @@ const Login = () => {
       const { token } = data;
 
       // Pour le débogage
-      console.log('Données renvoyées par l\'API:', data);
-      console.log('Valeurs saisies par l\'utilisateur:', userName, password);
-
+      console.log('Token reçu de l\'API :', token);
+  
       // Vérifier les informations de connexion avec celles de l'API
       if (response.ok) {
         // Connexion réussie, dispatcher l'action pour mettre à jour l'état global
         dispatch(loginSuccess(token));
-
-        // Enregistrer le token dans le local storage si nécessaire
+  
+        // Enregistrer le token dans le local storage
         localStorage.setItem('token', token);
-
+  
         // Rediriger ou effectuer d'autres actions nécessaires
-        window.location.href = "index.html";
+        window.location.href = "/user";
       } else {
         // Informations de connexion incorrectes, dispatcher l'action d'échec
         dispatch(loginFailure());
-
+  
         // Afficher un message d'erreur à l'utilisateur
         alert('Identifiants incorrects');
       }
     } catch (error) {
-      console.error('Erreur de connexion:', error.message);
+      console.error('Erreur de connexion :', error.message);
       // Gérer les erreurs de connexion, par exemple, afficher un message d'erreur à l'utilisateur
     }
   };
@@ -60,8 +59,8 @@ const Login = () => {
             <input
               type="text"
               id="username"
-              value={userName}
-              onChange={(e) => setUserName(e.target.value)} // Modifié ici
+              value={email}
+              onChange={(e) => setUserName(e.target.value)}
             />
           </div>
           <div className="input-wrapper">

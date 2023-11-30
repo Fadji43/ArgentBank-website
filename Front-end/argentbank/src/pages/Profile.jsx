@@ -2,25 +2,24 @@ import React from 'react';
 import '../css/main.css';
 import HeaderConnect from'../components/HeaderConnect.jsx';
 import LayoutUser from '../components/LayoutUser';
-import Welcome from '../components/Welcome';
-import Account from '../components/Account';
-import Footer from '../components/Footer';
+import Identify from '../components/Identify.jsx';
+import Account from '../components/Account.jsx';
+import Footer from '../components/Footer.jsx';
 
-function User() {
+function Profile() {
     return (
         <div>
             <main>
                 <HeaderConnect />
                 <LayoutUser style={{ backgroundColor: '#12002b'}}>
-                    <Welcome />
+                    <Identify />
                     <Account/>
-                </LayoutUser> 
+                </LayoutUser>
                 <Footer />
             </main>  
         </div>
-       
     )
 }
 
-export default User;
+export default Profile;
 

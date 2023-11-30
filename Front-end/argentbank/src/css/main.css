@@ -19,6 +19,7 @@ body {
 
 .bg-dark {
   background-color: #12002b;
+  padding: 25px; 
 }
 
 .sr-only {
@@ -54,11 +55,13 @@ body {
 .main-nav-item {
   text-decoration: none;
   margin-right: 0.5rem;
+  padding: 5px; 
 }
 
 .main-nav-item:hover {
   text-decoration: underline;
 }
+
 
 .main-nav-logo {
   display: flex;
@@ -257,6 +260,7 @@ body {
   color: #fff;
   font-weight: bold;
   padding: 10px;
+  margin: 10px;
 }
 
 .header {
@@ -274,6 +278,64 @@ body {
   border-color: #00bc77;
   background-color: #00bc77;
   color: #fff;
+}
+ /*********formulaire**********/
+ 
+ .formulaire{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  
+ }
+ 
+ .info {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  padding: 20px;
+  max-width: 300px;
+  background-color: #ccc;
+  margin-bottom: 20px;
+}
+
+.form-row {
+  display: flex;
+  flex-direction: row;
+  margin-bottom: 15px;
+}
+
+label {
+  display: block;
+  margin-bottom: 5px;
+}
+
+
+input {
+  width: 100%;
+  padding: 8px;
+  margin-bottom: 15px;
+  box-sizing: border-box;
+}
+.buttons {
+  display: flex;
+ flex-direction: row;
+ justify-content: center;
+}
+
+.edit-button {
+  background-color: #4caf50;
+  color: white;
+  padding: 10px 15px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.edit-button:hover {
+  background-color: #45a049;
 }
 
 @media (min-width: 720px) {

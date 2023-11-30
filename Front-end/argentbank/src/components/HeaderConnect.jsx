@@ -7,22 +7,22 @@ import '../css/main.css';
 
 function HeaderConnect() {
   return (
-<nav class="main-nav">
-      <Link to="/" class="main-nav-logo" href="./index.html">
+<nav className="main-nav">
+      <Link to="/" className="main-nav-logo" href="./index.html">
         <img
           className="main-nav-logo-image"
           src={logo}
           alt="Argent Bank Logo"
         />
-        <h1 class="sr-only">Argent Bank</h1>
+        <h1 className="sr-only">Argent Bank</h1>
       </Link>
-      <div>
-        <Link to="/" class="main-nav-item" href="./user.html">
-          <FontAwesomeIcon icon={faSignOut} />  
+      <div className="nav-gap">
+        <Link to="/" className="main-nav-item" href="./user.html">
+          <FontAwesomeIcon icon={faUserCircle} />  
           Tony
         </Link>
         <Link to="/signin" className="main-nav-item">
-          <FontAwesomeIcon icon={faUserCircle} />
+          <FontAwesomeIcon icon={faSignOut} />
           Sign Out
         </Link>
       </div>
