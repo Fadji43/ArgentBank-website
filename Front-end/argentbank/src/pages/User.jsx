@@ -1,6 +1,6 @@
 import React from 'react';
 import '../css/main.css';
-import HeaderConnect from'../components/HeaderConnect.jsx';
+import HeaderConnect from'../components/HeaderConnect';
 import LayoutUser from '../components/LayoutUser';
 import Welcome from '../components/Welcome';
 import Account from '../components/Account';

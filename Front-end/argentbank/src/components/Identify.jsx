@@ -25,18 +25,18 @@ function Identify() {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
-            'authorization': `bearer ${localStorage.getItem('token')}`
+            'authorization': `Bearer ${localStorage.getItem('token')}`
           },
         });
 
         if (response.ok) {
           const userData = await response.json();
           setUserData({
-            username: userData.username,
-            firstName: userData.firstName,
-            lastName: userData.lastName,
+            username: userData.body.username,
+            firstName: userData.body.firstName,
+            lastName: userData.body.lastName,
           });
-          setEditableUsername(userData.username);
+          setEditableUsername(userData.body.username);
         } else {
           console.error('Erreur lors de la récupération des données utilisateur');
         }
@@ -54,7 +54,7 @@ function Identify() {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
-          'authorization': `bearer ${localStorage.getItem('token')}`
+          'authorization': `Bearer ${localStorage.getItem('token')}`
         },
         body: JSON.stringify({
           newUsername: editableUsername,

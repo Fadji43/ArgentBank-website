@@ -19,7 +19,7 @@ const Login = () => {
 
       const data = await response.json();
   
-      const { token } = data;
+      const token = data.body.token;
 
       // Pour le débogage
       console.log('Token reçu de l\'API :', token);
