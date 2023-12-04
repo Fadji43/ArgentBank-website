@@ -1,15 +1,9 @@
-// Welcome.js
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { connect } from 'react-redux';
 import { useDispatch} from 'react-redux';
-import { fetchUserData } from '../actions/profileActions.js';
-
-
 
 function Welcome() {
   const [userData, setUserData] = useState({
-    username: '',
     firstName: '',
     lastName: '',
   });
@@ -37,7 +31,6 @@ function Welcome() {
         if (response.ok) {
           const userData = await response.json();
           setUserData({
-            username: userData.body.username,
             firstName: userData.body.firstName,
             lastName: userData.body.lastName,
           });

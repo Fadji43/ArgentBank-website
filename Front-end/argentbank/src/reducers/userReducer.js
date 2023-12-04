@@ -1,6 +1,7 @@
 const initialState = {
   data: {}, // ou null selon votre structure
   error: null,
+  username: '',
 };
 
 const userReducer = (state = initialState, action) => {

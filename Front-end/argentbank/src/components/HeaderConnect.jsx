@@ -5,19 +5,15 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUserCircle, faSignOut } from '@fortawesome/free-solid-svg-icons';
 import logo from '../img/argentBankLogo.png';
 import '../css/main.css';
-import { useUser } from '../userContext.js';
 
 function HeaderConnect() {
   const [userData, setUserData] = useState({
-    
     firstName: '',
-
   });
-
-  const [editableUsername, setEditableUsername] = useState('');
 
   // Utilisez le hook useDispatch pour dispatcher des actions Redux
   const dispatch = useDispatch();
+ 
 
   // Récupérer le token depuis le localStorage une seule fois au début du composant
   const token = localStorage.getItem('token');
@@ -37,16 +33,15 @@ function HeaderConnect() {
         if (response.ok) {
           const userData = await response.json();
           setUserData({
-            username: userData.body.username,
             firstName: userData.body.firstName,
-            lastName: userData.body.lastName,
           });
-          setEditableUsername(userData.body.username);
         } else {
           console.error('Erreur lors de la récupération des données utilisateur');
+          // Gérer l'erreur de manière conviviale, par exemple afficher un message à l'utilisateur
         }
       } catch (error) {
         console.error('Erreur réseau :', error);
+        // Gérer l'erreur de manière conviviale, par exemple afficher un message à l'utilisateur
       }
     };
 
@@ -54,8 +49,9 @@ function HeaderConnect() {
   }, [dispatch, token]);
 
   const logout = () => {
-    // efface le token du localStorage pour déconnexion
+    // Efface le token du localStorage pour déconnexion
     localStorage.removeItem('token');
+    
   };
 
   return (
@@ -69,14 +65,14 @@ function HeaderConnect() {
         <h1 className="sr-only">Argent Bank</h1>
       </Link>
       <div className="nav-gap">
-        <Link to="/" className="main-nav-item">
+        <div className="main-nav-item">
           <FontAwesomeIcon icon={faUserCircle} />
           <p>{userData.firstName}</p>
-        </Link>
-        <Link to="/signin" className="main-nav-item" onClick={logout}>
+        </div>
+        <div className="main-nav-item" onClick={logout}>
           <FontAwesomeIcon icon={faSignOut} />
           Sign Out
-        </Link>
+        </div>
       </div>
     </nav>
   );
