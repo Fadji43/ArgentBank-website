@@ -101,6 +101,25 @@ paths:
           description: Invalid Fields
         '500':
           description: Internal Server Error
+  /user/transactions:
+    get:
+      security:
+        - Bearer: []
+      tags:
+        - Module Transaction
+      summary: Obtenir les transactions
+      description: API pour récupérer les transactions de l'utilisateur
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: Transactions récupérées avec succès
+          schema:
+            $ref: '#/definitions/TransactionResponse'  # Assurez-vous que la référence est correcte
+        '400':
+          description: Champs non valides
+        '500':
+          description: Erreur interne du serveur
 securityDefinitions:
   Bearer:
     type: apiKey
@@ -156,3 +175,29 @@ definitions:
     properties:
       userName:
         type: string
+  Transaction:
+    type: object
+    properties:
+      date:
+        type: string
+        description: Date de la transaction
+      description:
+        type: string
+        description: Description de la transaction
+      amount:
+        type: number
+        description: Montant de la transaction
+      balance:
+        type: number
+        description: Solde du compte après la transaction
+  TransactionResponse:
+    type: object
+    properties:
+      status:
+        type: integer
+      message:
+        type: string
+      body:
+        type: array
+        items:
+          $ref: '#/definitions/Transaction'  

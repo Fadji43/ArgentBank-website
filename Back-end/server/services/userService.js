@@ -76,8 +76,6 @@ module.exports.loginUser = async serviceData => {
 module.exports.updateUserProfile = async serviceData => {
   try {
     const jwtToken = serviceData.headers.authorization.split('Bearer')[1].trim()
-      console.log('Decoded JWT Token:', decodedJwtToken);
-      console.log('Updated Username:', serviceData.body.userName);
     const decodedJwtToken = jwt.decode(jwtToken)
     const user = await User.findOneAndUpdate(
       { _id: decodedJwtToken.id },
