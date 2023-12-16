@@ -13,6 +13,8 @@ function Profile() {
             <LayoutUser style={{ backgroundColor: '#12002b'}}>
                 <Identify />
                 <Account/>
+                <Account/>
+                <Account/>
             </LayoutUser>
             <Footer />
         </main>  

@@ -8,44 +8,48 @@ const Login = () => {
   const dispatch = useDispatch();
 
   const handleLogin = async () => {
+    const response = await fetch('http://localhost:3001/api/v1/user/login', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ email, password }),
+    });
+    
     try {
-      const response = await fetch('http://localhost:3001/api/v1/user/login', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ email:email, password }), 
-      });
-
       const data = await response.json();
-  
-      const token = data.body.token;
-
-      // Pour le débogage
-      console.log('Token reçu de l\'API :', token);
-  
-      // Vérifier les informations de connexion avec celles de l'API
+      
       if (response.ok) {
-        // Connexion réussie, dispatcher l'action pour mettre à jour l'état global
-        dispatch(loginSuccess(token));
-  
-        // Enregistrer le token dans le local storage
-        localStorage.setItem('token', token);
-  
-        // Rediriger ou effectuer d'autres actions nécessaires
-        window.location.href = "/user";
+        const token = data.body && data.body.token;
+    
+        // Vérifier si le token existe avant de l'utiliser
+        if (token) {
+          // Connexion réussie, dispatcher l'action pour mettre à jour l'état global
+          dispatch(loginSuccess(token));
+    
+          // Enregistrer le token dans le local storage
+          localStorage.setItem('token', token);
+    
+          // Rediriger ou effectuer d'autres actions nécessaires
+          window.location.href = '/user';
+        } else {
+          // Afficher un message d'erreur à l'utilisateur
+          alert('Identifiants incorrects');
+          console.log('Alerte affichée');
+        }
       } else {
         // Informations de connexion incorrectes, dispatcher l'action d'échec
         dispatch(loginFailure());
-  
+    
         // Afficher un message d'erreur à l'utilisateur
         alert('Identifiants incorrects');
+        console.log('Alerte affichée');
       }
     } catch (error) {
       console.error('Erreur de connexion :', error.message);
       // Gérer les erreurs de connexion, par exemple, afficher un message d'erreur à l'utilisateur
     }
-  };
+  };    
 
 
   return (

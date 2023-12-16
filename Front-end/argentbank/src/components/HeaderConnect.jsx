@@ -33,7 +33,7 @@ function HeaderConnect() {
       <div className="nav_connect">
         <div className="main-nav-item">
           <FontAwesomeIcon icon={faUserCircle} />
-          <p>{userData.firstName}</p>
+          <p>{userData.userName}</p>
       </div>
       <div className="main-nav-item">
         <Link to="/"  onClick={logout}>

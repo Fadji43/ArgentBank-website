@@ -14,6 +14,8 @@ function User() {
                 <LayoutUser style={{ backgroundColor: '#12002b'}}>
                     <Welcome />
                     <Account/>
+                    <Account/>
+                    <Account/>
                 </LayoutUser> 
                 <Footer />
             </main>  

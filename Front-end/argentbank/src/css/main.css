@@ -191,10 +191,8 @@ body {
 
 .input-remember {
   display: flex;
-}
-
-.input-remember label {
-  margin-left: 0.25rem;
+  flex-direction: row;
+  justify-content: center;
 }
 
 .input-wrapper {
