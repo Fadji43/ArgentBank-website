@@ -1,13 +1,17 @@
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { loginSuccess, loginFailure } from '../actions/loginActions';
+import { loginReducer} from '../reducers/loginReducer';
+import '../css/main.css';
 
 const Login = () => {
   const [email, setUserName] = useState(''); 
   const [password, setPassword] = useState('');
   const dispatch = useDispatch();
 
-  const handleLogin = async () => {
+  const handleLogin = async (e) => {
+    e.preventDefault();
+
     const response = await fetch('http://localhost:3001/api/v1/user/login', {
       method: 'POST',
       headers: {
@@ -18,17 +22,18 @@ const Login = () => {
     
     try {
       const data = await response.json();
-      
+debugger
       if (response.ok) {
         const token = data.body && data.body.token;
+        console.log('Token from Login:', { token });
+        console.log('Server response:', data.body);
     
         // Vérifier si le token existe avant de l'utiliser
         if (token) {
           // Connexion réussie, dispatcher l'action pour mettre à jour l'état global
-          dispatch(loginSuccess(token));
-    
-          // Enregistrer le token dans le local storage
-          localStorage.setItem('token', token);
+          const action = loginSuccess(token)
+          dispatch(loginReducer(action))
+         //dispatch(loginSuccess(token));
     
           // Rediriger ou effectuer d'autres actions nécessaires
           window.location.href = '/user';
@@ -57,7 +62,7 @@ const Login = () => {
       <section className="sign-in-content">
         <i className="fa fa-user-circle sign-in-icon"></i>
         <h1>Sign In</h1>
-        <form>
+         <form onSubmit={handleLogin}>
           <div className="input-wrapper">
             <label htmlFor="username">Email</label>
             <input
@@ -80,7 +85,7 @@ const Login = () => {
             <input type="checkbox" id="remember-me" />
             <label htmlFor="remember-me">Remember me</label>
           </div>
-          <button className="sign-in-button" type="button" onClick={handleLogin}>
+          <button className="sign-in-button" type="submit">
             Sign In
           </button>
         </form>

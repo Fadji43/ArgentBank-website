@@ -1,14 +1,15 @@
 const initialState = {
   token: null,
+  type: null,
   isAuthenticated: false,
 };
 
-const loginReducer = (state = initialState, action) => {
-  switch (action.type) {
+export const loginReducer = (state = initialState) => {
+  switch (state?.payload?.type) {
     case 'LOGIN_SUCCESS':
       return {
         ...state,
-        token: action.payload.token,
+        token: state.payload.token,
         isAuthenticated: true,
       };
 
@@ -26,3 +27,4 @@ const loginReducer = (state = initialState, action) => {
 };
 
 export default loginReducer;
+

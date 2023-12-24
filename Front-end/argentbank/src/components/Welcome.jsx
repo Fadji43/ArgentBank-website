@@ -1,52 +1,43 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { useDispatch} from 'react-redux';
+import '../css/main.css';
+import { fetchProfileSuccess, fetchProfileFailure } from '../actions/profileActions';
 
 function Welcome() {
-  const [userData, setUserData] = useState({
-    firstName: '',
-    lastName: '',
-  });
-
-  const [editableUsername, setEditableUsername] = useState('');
-
-  // Utilisez le hook useDispatch pour dispatcher des actions Redux
   const dispatch = useDispatch();
-
-  // Récupérer le token depuis le localStorage une seule fois au début du composant
-  const token = localStorage.getItem('token');
-  console.log('Token from localStorage:', token);
+  const userData = useSelector((state) => state.profile.userData);
+  const token = useSelector((state) => state.profile.token);
+  console.log('Token from login:', token);
 
   useEffect(() => {
     const fetchData = async () => {
-      try {
-        const response = await fetch('http://localhost:3001/api/v1/user/profile', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-            'authorization': `Bearer ${token}`
-          },
-        });
-
-        if (response.ok) {
-          const userData = await response.json();
-          setUserData({
-            firstName: userData.body.firstName,
-            lastName: userData.body.lastName,
+      if (token) {
+        try {
+          const response = await fetch('http://localhost:3001/api/v1/user/profile', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+              'authorization': `Bearer ${token}`
+            },
           });
-          setEditableUsername(userData.body.username);
-        } else {
-          console.error('Erreur lors de la récupération des données utilisateur');
+
+          if (response.ok) {
+            const userData = await response.json();
+            const { firstName, lastName } = userData.body;
+            dispatch(fetchProfileSuccess(userData.body, firstName, lastName));
+          } else {
+            dispatch(fetchProfileFailure('Erreur lors de la récupération des données utilisateur'));
+          }
+        } catch (error) {
+          console.error('Erreur lors de la requête:', error);
+          dispatch(fetchProfileFailure(`Erreur réseau : ${error.message}`));
         }
-      } catch (error) {
-        console.error('Erreur réseau :', error);
       }
     };
 
     fetchData();
   }, [dispatch, token]);
-
-
   return (
     <div className="header">
       <h1>Welcome back<br />{`${userData.firstName} ${userData.lastName}!`}</h1>
@@ -55,6 +46,7 @@ function Welcome() {
       </Link>
     </div>
   );
-}
+  }
+
 
 export default Welcome;
