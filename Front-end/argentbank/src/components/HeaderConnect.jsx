@@ -1,51 +1,16 @@
-import React, {  useEffect } from 'react';
+import React from 'react';
+import { useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUserCircle, faSignOut } from '@fortawesome/free-solid-svg-icons';
 import logo from '../img/argentBankLogo.png';
+import { logout } from '../slices/profileSlice';
 import '../css/main.css';
-import { fetchProfileSuccess, fetchProfileFailure } from '../actions/profileActions';
-import { logout } from '../actions/loginActions';
 
-debugger
-function HeaderConnect() {
+function HeaderConnect({ userData }) {
+  const userName = userData?.body?.userName; // Utilisation de la vérification de nullité (?)
+
   const dispatch = useDispatch();
-  const userData = useSelector((state) => state.profile.userData);
-  const token = useSelector((state) => state.login.token);
-  console.log('Token from Login:', { token });
-
-  //const [userName, setUserName] = useState("");
-
-  useEffect(() => {
-    const fetchData = async () => {
-      if (token) {
-
-        try {
-          const response = await fetch('http://localhost:3001/api/v1/user/profile', {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json',
-              'authorization': `Bearer ${token}`
-            },
-          });
-
-          if (response.ok) {
-            const userData = await response.json();
-            const userName = userData && userData.userName;
-            dispatch(fetchProfileSuccess(userData.body, userName));
-          } else {
-            dispatch(fetchProfileFailure('Erreur lors de la récupération des données utilisateur'));
-          }
-        } catch (error) {
-          console.error('Erreur lors de la requête:', error);
-          dispatch(fetchProfileFailure(`Erreur réseau : ${error.message}`));
-        }
-      }
-    };
-
-    fetchData();
-  }, [dispatch, token]);
 
   const handleLogout = () => {
     // Supprimer le token du store Redux en dispatchant l'action de déconnexion
@@ -67,7 +32,7 @@ function HeaderConnect() {
       <div className="nav_connect">
         <div className="main-nav-item">
           <FontAwesomeIcon icon={faUserCircle} />
-          <p>{userData.userName}</p>
+          <p>{userName}</p>
         </div>
         <div className="main-nav-item">
           <Link to="/" onClick={handleLogout}>

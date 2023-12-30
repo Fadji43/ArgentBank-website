@@ -1,13 +1,15 @@
 import React, { useState } from 'react';
-import { useDispatch } from 'react-redux';
-import { loginSuccess, loginFailure } from '../actions/loginActions';
-import { loginReducer} from '../reducers/loginReducer';
+import { useDispatch,  } from 'react-redux';
+import {useNavigate } from 'react-router-dom';
+import { loginFailure } from '../slices/profileSlice';
+import { setToken } from '../slices/authSlice';
 import '../css/main.css';
 
 const Login = () => {
   const [email, setUserName] = useState(''); 
   const [password, setPassword] = useState('');
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const handleLogin = async (e) => {
     e.preventDefault();
@@ -31,12 +33,15 @@ debugger
         // Vérifier si le token existe avant de l'utiliser
         if (token) {
           // Connexion réussie, dispatcher l'action pour mettre à jour l'état global
-          const action = loginSuccess(token)
-          dispatch(loginReducer(action))
+          //const action = loginSuccess(token)
+          //dispatch(loginReducer(action))
          //dispatch(loginSuccess(token));
+         //console.log('cool ou pas')
+         dispatch(setToken(token)); 
+         console.log(' pas sur !')
     
           // Rediriger ou effectuer d'autres actions nécessaires
-          window.location.href = '/user';
+          navigate('/user');
         } else {
           // Afficher un message d'erreur à l'utilisateur
           alert('Identifiants incorrects');
