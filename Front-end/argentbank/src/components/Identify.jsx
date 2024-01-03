@@ -1,18 +1,18 @@
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { updateUsername, updateUsernameRequest } from '../slices/usernameSlice';
+
 import '../css/main.css';
 import { Link, useNavigate } from 'react-router-dom';
 
-function Identify() {
-  const userData = useSelector((state) => state.profile.userData);
-  const [editableUsername, setEditableUsername] = useState(userData.userName || ''); 
+function Identify({ userData }) {
+  const { firstName, lastName, userName } = userData && userData.body ? userData.body : {};
+  const [editableUsername, setEditableUsername] = useState(userName || '');  
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  // Récupérer le token depuis le store Redux
-  const token = useSelector((state) => state.token); 
-  console.log('Token:', token);
+  const token = useSelector((state) => state.auth?.token);
+  console.log('Token from Redux:', token);
 
   const handleSave = async () => {
     dispatch(updateUsernameRequest());
@@ -32,11 +32,13 @@ function Identify() {
       if (response.ok) {
         const updatedUserData = await response.json();
   
-        if (updatedUserData.username !== userData.userName) {
+        if (updatedUserData.username !== userName) {
           console.log('Le nom d\'utilisateur a été modifié avec succès.');
-          // Utilisez dispatch(updateUsername()) pour mettre à jour le nom d'utilisateur dans le Redux store
           dispatch(updateUsername(updatedUserData.username));
+
+
           navigate('/user');
+        
         } else {
           console.log('Le nom d\'utilisateur n\'a pas été modifié.');
         }
@@ -59,7 +61,7 @@ function Identify() {
               <input
                 type="text"
                 name="username"
-                value={editableUsername}
+                value={editableUsername}  
                 onChange={(e) => setEditableUsername(e.target.value)}
               />
             </label>
@@ -70,7 +72,7 @@ function Identify() {
               <input
                 type="text"
                 name="firstName"
-                value={userData.firstName}
+                value={firstName}
                 disabled
               />
             </label>
@@ -81,7 +83,7 @@ function Identify() {
               <input
                 type="text"
                 name="lastName"
-                value={userData.lastName}
+                value={lastName}
                 disabled
               />
             </label>

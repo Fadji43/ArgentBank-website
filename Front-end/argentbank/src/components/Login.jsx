@@ -4,6 +4,8 @@ import {useNavigate } from 'react-router-dom';
 import { loginFailure } from '../slices/profileSlice';
 import { setToken } from '../slices/authSlice';
 import '../css/main.css';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faUserCircle } from '@fortawesome/free-solid-svg-icons';
 
 const Login = () => {
   const [email, setUserName] = useState(''); 
@@ -24,7 +26,7 @@ const Login = () => {
     
     try {
       const data = await response.json();
-debugger
+
       if (response.ok) {
         const token = data.body && data.body.token;
         console.log('Token from Login:', { token });
@@ -33,14 +35,7 @@ debugger
         // Vérifier si le token existe avant de l'utiliser
         if (token) {
           // Connexion réussie, dispatcher l'action pour mettre à jour l'état global
-          //const action = loginSuccess(token)
-          //dispatch(loginReducer(action))
-         //dispatch(loginSuccess(token));
-         //console.log('cool ou pas')
-         dispatch(setToken(token)); 
-         console.log(' pas sur !')
-    
-          // Rediriger ou effectuer d'autres actions nécessaires
+         dispatch(setToken(token));
           navigate('/user');
         } else {
           // Afficher un message d'erreur à l'utilisateur
@@ -65,7 +60,7 @@ debugger
   return (
     <div className="main bg-dark">
       <section className="sign-in-content">
-        <i className="fa fa-user-circle sign-in-icon"></i>
+        <FontAwesomeIcon icon={faUserCircle} />
         <h1>Sign In</h1>
          <form onSubmit={handleLogin}>
           <div className="input-wrapper">
@@ -91,7 +86,7 @@ debugger
             <label htmlFor="remember-me">Remember me</label>
           </div>
           <button className="sign-in-button" type="submit">
-            Sign In
+            { ' ' }Sign In
           </button>
         </form>
       </section>

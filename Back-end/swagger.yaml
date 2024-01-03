@@ -120,7 +120,7 @@ paths:
           description: Champs non valides
         '500':
           description: Erreur interne du serveur
-  /user/transactions/update-description:
+  /user/transactions/description:
     put:
       security:
         - Bearer: []
@@ -134,7 +134,7 @@ paths:
           description: Update account description attributes
           required: true
           schema:
-            $ref: '#/definitions/AccountDescriptionUpdate'
+            $ref: '#/definitions/AccountDescription'
       produces:
         - application/json
       responses:
@@ -227,7 +227,7 @@ definitions:
         type: array
         items:
           $ref: '#/definitions/Transaction' 
-  AccountDescriptionUpdate:
+  AccountDescription:
     type: object
     properties:
       accountId:

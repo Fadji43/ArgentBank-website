@@ -16,11 +16,10 @@ function User() {
   console.log('Token from Login:', { token });
 
   useEffect(() => {
-    console.log('useEffect in User component triggered');
     const fetchData = async () => {
       if (token) {
         try {
-          // Utilisez l'endpoint approprié pour récupérer les données utilisateur
+          
           const response = await fetch('http://localhost:3001/api/v1/user/profile', {
             method: 'POST', 
             headers: {

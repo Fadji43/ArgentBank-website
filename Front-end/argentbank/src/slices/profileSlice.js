@@ -1,7 +1,6 @@
-// profileSlice.js
 import { createSlice } from '@reduxjs/toolkit';
 
-// Définir l'état initial
+
 const initialState = {
   userData: {},
   loading: false,
@@ -9,7 +8,6 @@ const initialState = {
   token: null,
 };
 
-// Créer un slice
 const profileSlice = createSlice({
   name: 'profile',
   initialState,

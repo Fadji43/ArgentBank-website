@@ -17,7 +17,7 @@ export const updateUsernameFailure = (error) => ({
   payload: error,
 });
 
-// Async action to update the username
+
 export const updateUsername = (newUsername) => {
   return async (dispatch) => {
     dispatch(updateUsernameRequest());

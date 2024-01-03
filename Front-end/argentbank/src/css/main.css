@@ -66,10 +66,14 @@ body {
   padding: 5px; 
 }
 
+.main-nav-item p,
+.main-nav-item a {
+  margin-left: 8px; 
+} 
+
 .main-nav-item:hover {
   text-decoration: underline;
 }
-
 
 .main-nav-logo {
   display: flex;
@@ -192,7 +196,17 @@ body {
 .input-remember {
   display: flex;
   flex-direction: row;
-  justify-content: center;
+ 
+  align-items: center;
+  width: 100%; 
+}
+
+.input-remember label {
+  flex: 20; 
+}
+
+.input-remember input {
+  flex: 1;
 }
 
 .input-wrapper {

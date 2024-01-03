@@ -8,14 +8,13 @@ import { logout } from '../slices/profileSlice';
 import '../css/main.css';
 
 function HeaderConnect({ userData }) {
-  const userName = userData?.body?.userName; // Utilisation de la vérification de nullité (?)
+  const userName = userData?.body?.userName; 
 
   const dispatch = useDispatch();
 
   const handleLogout = () => {
     // Supprimer le token du store Redux en dispatchant l'action de déconnexion
     dispatch(logout());
-
     localStorage.removeItem('token');
   };
 
@@ -37,7 +36,7 @@ function HeaderConnect({ userData }) {
         <div className="main-nav-item">
           <Link to="/" onClick={handleLogout}>
             <FontAwesomeIcon icon={faSignOut} />
-            Sign Out
+            {' '} Sign Out
           </Link>
         </div>
       </div>
