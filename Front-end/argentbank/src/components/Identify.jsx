@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { updateUsername, updateUsernameRequest } from '../slices/usernameSlice';
+import { updateUsernameSuccess, updateUsernameRequest, updateUsernameFailure } from '../slices/usernameSlice';
 
 import '../css/main.css';
 import { Link, useNavigate } from 'react-router-dom';
@@ -34,19 +34,22 @@ function Identify({ userData }) {
   
         if (updatedUserData.username !== userName) {
           console.log('Le nom d\'utilisateur a été modifié avec succès.');
-          dispatch(updateUsername(updatedUserData.username));
-
-
+          dispatch(updateUsernameSuccess({
+            userData: updatedUserData,
+            token: token,
+          }));
+  
           navigate('/user');
-        
         } else {
           console.log('Le nom d\'utilisateur n\'a pas été modifié.');
         }
       } else {
         console.error('Erreur lors de la mise à jour du nom d\'utilisateur');
+        dispatch(updateUsernameFailure('Erreur lors de la mise à jour du nom d\'utilisateur'));
       }
     } catch (error) {
       console.error('Erreur réseau :', error);
+      dispatch(updateUsernameFailure('Erreur réseau : ' + error.message));
     }
   };
   

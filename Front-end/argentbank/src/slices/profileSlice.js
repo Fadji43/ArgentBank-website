@@ -6,6 +6,7 @@ const initialState = {
   loading: false,
   error: null,
   token: null,
+  rememberMe: false,
 };
 
 const profileSlice = createSlice({
@@ -29,6 +30,11 @@ const profileSlice = createSlice({
     loginSuccess: (state, action) => {
       state.token = action.payload.token;
       state.userData = action.payload.userData;
+      state.rememberMe = action.payload.rememberMe || false;
+
+      if (state.rememberMe) {
+        localStorage.setItem('authToken', action.payload.token);
+      }
     },
     loginFailure: (state) => {
       state.token = null;
@@ -37,6 +43,8 @@ const profileSlice = createSlice({
     logout: (state) => {
       state.token = null;
       state.userData = {};
+      state.rememberMe = false;
+      localStorage.removeItem('authToken'); 
     },
   },
 });

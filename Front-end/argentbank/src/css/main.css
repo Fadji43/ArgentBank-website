@@ -66,6 +66,10 @@ body {
   padding: 5px; 
 }
 
+.icon_margin{
+  margin-right: 8px;
+}
+
 .main-nav-item p,
 .main-nav-item a {
   margin-left: 8px; 

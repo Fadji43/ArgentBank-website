@@ -18,8 +18,8 @@ function Header() {
             </Link>
             <div>
                 <Link to="/signin" className="main-nav-item">
-                    <FontAwesomeIcon icon={faUserCircle} />
-                    {' '}Sign In
+                    <FontAwesomeIcon icon={faUserCircle}  className="icon_margin" />
+                    Sign In
                 </Link>
             </div>
         </nav>

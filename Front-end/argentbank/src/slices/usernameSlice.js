@@ -1,31 +1,45 @@
-export const UPDATE_USERNAME_REQUEST = 'UPDATE_USERNAME_REQUEST';
-export const UPDATE_USERNAME_SUCCESS = 'UPDATE_USERNAME_SUCCESS';
-export const UPDATE_USERNAME_FAILURE = 'UPDATE_USERNAME_FAILURE';
+import { createSlice } from '@reduxjs/toolkit';
 
-
-export const updateUsernameRequest = () => ({
-  type: UPDATE_USERNAME_REQUEST,
-});
-
-export const updateUsernameSuccess = (newUsername) => ({
-  type: UPDATE_USERNAME_SUCCESS,
-  payload: newUsername,
-});
-
-export const updateUsernameFailure = (error) => ({
-  type: UPDATE_USERNAME_FAILURE,
-  payload: error,
-});
-
-
-export const updateUsername = (newUsername) => {
-  return async (dispatch) => {
-    dispatch(updateUsernameRequest());
-
-    try {
-      dispatch(updateUsernameSuccess(newUsername));
-    } catch (error) {
-      dispatch(updateUsernameFailure(error.message));
-    }
-  };
+const initialState = {
+  userData: {},
+  loading: false,
+  error: null,
+  token: null,
 };
+
+const usernameSlice = createSlice({
+  name: 'username',
+  initialState,
+  reducers: {
+    updateUsernameRequest: (state) => {
+      state.loading = true;
+      state.error = null;
+    },
+    updateUsernameSuccess: (state, action) => {
+      state.loading = false;
+      state.userData = action.payload.userData;
+      state.token = action.payload.token;
+      state.error = null;
+    },
+    updateUsernameFailure: (state, action) => {
+      state.loading = false;
+      state.error = action.payload;
+    },
+    setUsername: (state, action) => {
+      // Assurez-vous que action.payload est un objet avec une propriété 'loading'
+      state.loading = action.payload.loading;
+      state.error = action.payload.error;
+      state.token = action.payload.token;
+      state.userData = action.payload.userData;
+    },
+  },
+});
+
+export const {
+  updateUsernameRequest,
+  updateUsernameSuccess,
+  updateUsernameFailure,
+  setUsername,
+} = usernameSlice.actions;
+
+export default usernameSlice.reducer;
