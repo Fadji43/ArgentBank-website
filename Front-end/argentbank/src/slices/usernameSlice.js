@@ -18,7 +18,7 @@ const usernameSlice = createSlice({
     updateUsernameSuccess: (state, action) => {
       state.loading = false;
       state.userData = action.payload.userData;
-      state.token = action.payload.token;
+      //state.token = action.payload.token;
       state.error = null;
     },
     updateUsernameFailure: (state, action) => {

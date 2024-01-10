@@ -1,21 +1,17 @@
-import React, { useEffect } from 'react';
-import { connect } from 'react-redux';
-import { useDispatch } from 'react-redux';
+import React from 'react';
+
+import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUserCircle, faSignOut } from '@fortawesome/free-solid-svg-icons';
 import logo from '../img/argentBankLogo.png';
 import { logout } from '../slices/profileSlice';
-import { setUsername } from '../slices/usernameSlice';
 
-const mapStateToProps = (state) => {
-  return {
-    userData: state.profile.userData,
-  };
-};
 
-function HeaderConnect({ userData, onUsernameUpdate  }) {
-  const userName = userData?.body?.userName;
+
+
+function HeaderConnect({  onUsernameUpdate  }) {
+  const userName = useSelector((state) => state.username.userData.body.userName);
   const dispatch = useDispatch();
 
   const handleLogoutClick = () => {
@@ -23,20 +19,9 @@ function HeaderConnect({ userData, onUsernameUpdate  }) {
     localStorage.removeItem('token');
   };
 
-  useEffect(() => {
-    const newUsername = userData?.body?.userName;
-    if (newUsername) {
-      console.log('Nouveau nom d\'utilisateur:', newUsername);
-      dispatch(setUsername({
-        loading: false,
-        error: null,
-        userData: { userName: newUsername },
-      }));
+  
 
-      // Appeler la fonction de mise à jour du nom d'utilisateur dans le composant Welcome
-      onUsernameUpdate(newUsername);
-    }
-  }, [userData, dispatch, onUsernameUpdate]);
+     
 
   return (
     <nav className="main-nav">
@@ -49,7 +34,7 @@ function HeaderConnect({ userData, onUsernameUpdate  }) {
         <h1 className="sr-only">Argent Bank</h1>
       </Link>
 
-      {userName ? (
+      
         <div className="nav_connect">
           <div className="main-nav-item">
             <FontAwesomeIcon icon={faUserCircle} />
@@ -62,10 +47,10 @@ function HeaderConnect({ userData, onUsernameUpdate  }) {
             </Link>
           </div>
         </div>
-      ) : null}
+ 
     </nav>
   );
 }
 
 // Connectez le composant au store Redux
-export default connect(mapStateToProps)(HeaderConnect);
+export default HeaderConnect;

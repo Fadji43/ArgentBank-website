@@ -55,7 +55,7 @@ function User() {
   return (
     <div>
       <main>
-        <HeaderConnect userData={userData}
+        <HeaderConnect 
           handleLogout={handleLogout}
           onUsernameUpdate={handleUsernameUpdate} />
         <LayoutUser style={{ backgroundColor: '#12002b' }}>

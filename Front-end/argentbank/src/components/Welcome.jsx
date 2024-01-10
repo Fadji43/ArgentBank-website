@@ -1,10 +1,8 @@
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
-import { updateUsernameSuccess, updateUsernameRequest, updateUsernameFailure } from '../slices/usernameSlice';
-import { setUsername } from '../slices/usernameSlice';
+import { updateUsernameSuccess,  updateUsernameFailure } from '../slices/usernameSlice';
 
-function Welcome({ userData, onUsernameUpdate }) {
+function Welcome({ userData }) {
   const { firstName, lastName, userName } = userData && userData.body ? userData.body : {};
   const [editableUsername, setEditableUsername] = useState(userName || '');  
   const dispatch = useDispatch();
@@ -12,7 +10,7 @@ function Welcome({ userData, onUsernameUpdate }) {
   const token = useSelector((state) => state.auth?.token);
   const [isEditing, setIsEditing] = useState(false);
 
-  const navigate = useNavigate();
+
 
   const toggleEdit = () => {
     setIsEditing(!isEditing);
@@ -20,7 +18,7 @@ function Welcome({ userData, onUsernameUpdate }) {
 
   const handleSave = async (e) => {
     e.preventDefault();
-    dispatch(updateUsernameRequest());
+    //dispatch(updateUsernameRequest());
 
     try {
       const response = await fetch('http://localhost:3001/api/v1/user/profile', {
@@ -39,17 +37,18 @@ function Welcome({ userData, onUsernameUpdate }) {
         const newUserName = updatedUserData.body.userName;
 
         if (newUserName !== userName) {
-          console.log('Le nom d\'utilisateur a été modifié avec succès.');
+          console.log(updatedUserData);
           dispatch(updateUsernameSuccess({
             userData: updatedUserData,
-            token: token,
+      
           }));
 
           // Dispatch l'action setUsername avec le nouveau nom d'utilisateur
-        dispatch(setUsername(updatedUserData.body.userName));
+        //dispatch(setUsername(updatedUserData.body.userName));
 
               // Appeler la fonction de mise à jour du nom d'utilisateur dans le composant parent (User)
-              onUsernameUpdate(updatedUserData.body.userName);
+              //onUsernameUpdate(updatedUserData.body.userName);
+              console.log('Welcome: Nouveau nom d\'utilisateur détecté -', newUserName);
         }
       } else {
         console.error('Erreur lors de la mise à jour du nom d\'utilisateur');
@@ -107,7 +106,7 @@ function Welcome({ userData, onUsernameUpdate }) {
                 <button className="edit-button" type="submit">
                   Save
                 </button>
-                <button className="edit-button" type="button" onClick={() => navigate("/user")}>
+                <button className="edit-button" type="button" onClick={toggleEdit}>
                   Cancel
                 </button>
               </div>
