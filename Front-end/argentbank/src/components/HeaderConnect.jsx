@@ -8,14 +8,14 @@ import logo from '../img/argentBankLogo.png';
 import { logout } from '../slices/profileSlice';
 
 function HeaderConnect() {
-  const userName = useSelector((state) => state.username.userData.body?.userName || '');
-
+  const userName = useSelector((state) => state.username.userData.body?.userName || '' );
   const dispatch = useDispatch();
 
   const handleLogoutClick = () => {
     dispatch(logout());
     localStorage.removeItem('token');
-  }; 
+  };
+
 
   return (
     <nav className="main-nav">

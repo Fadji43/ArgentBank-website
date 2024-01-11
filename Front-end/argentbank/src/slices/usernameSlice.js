@@ -24,10 +24,8 @@ const usernameSlice = createSlice({
       state.loading = false;
       state.error = action.payload;
     },
-    
-    },
   },
-);
+  });
 
 export const {
   updateUsernameRequest,
