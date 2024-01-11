@@ -1,24 +1,25 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { updateUsernameSuccess,  updateUsernameFailure } from '../slices/usernameSlice';
+import { updateUsernameSuccess, updateUsernameFailure } from '../slices/usernameSlice';
 
 function Welcome({ userData }) {
   const { firstName, lastName, userName } = userData && userData.body ? userData.body : {};
-  const [editableUsername, setEditableUsername] = useState(userName || '');  
+  const [editableUsername, setEditableUsername] = useState(userName || '');  // Initialisation avec userName
   const dispatch = useDispatch();
 
   const token = useSelector((state) => state.auth?.token);
   const [isEditing, setIsEditing] = useState(false);
 
-
+  useEffect(() => {
+    // Mettre à jour editableUsername lorsque userData change
+    setEditableUsername(userName || '');
+  }, [userName]);
 
   const toggleEdit = () => {
     setIsEditing(!isEditing);
   };
-
   const handleSave = async (e) => {
     e.preventDefault();
-    //dispatch(updateUsernameRequest());
 
     try {
       const response = await fetch('http://localhost:3001/api/v1/user/profile', {
@@ -42,12 +43,6 @@ function Welcome({ userData }) {
             userData: updatedUserData,
       
           }));
-
-          // Dispatch l'action setUsername avec le nouveau nom d'utilisateur
-        //dispatch(setUsername(updatedUserData.body.userName));
-
-              // Appeler la fonction de mise à jour du nom d'utilisateur dans le composant parent (User)
-              //onUsernameUpdate(updatedUserData.body.userName);
               console.log('Welcome: Nouveau nom d\'utilisateur détecté -', newUserName);
         }
       } else {
@@ -64,22 +59,22 @@ function Welcome({ userData }) {
 
   return ( 
     <div>
-      {isEditing ? (
-        <div>
-          <h1>Edit user info</h1>
-          <div className='formulaire'>
-            <form className="info" onSubmit={handleSave}>
-              <div className="form-row">
-                <label>
-                  User name :
-                  <input
-                    type="text"
-                    name="username"
-                    value={editableUsername}  
-                    onChange={(e) => setEditableUsername(e.target.value)}
-                  />
-                </label>
-              </div>
+    {isEditing ? (
+      <div>
+        <h1>Edit user info</h1>
+        <div className='formulaire'>
+          <form className="info" onSubmit={handleSave}>
+            <div className="form-row">
+              <label>
+                User name:
+                <input
+                  type="text"
+                  name="username"
+                  value={editableUsername}
+                  onChange={(e) => setEditableUsername(e.target.value)}
+                />
+              </label>
+            </div>
               <div className="form-row">
                 <label>
                   First name :

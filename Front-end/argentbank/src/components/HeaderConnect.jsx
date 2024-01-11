@@ -7,21 +7,15 @@ import { faUserCircle, faSignOut } from '@fortawesome/free-solid-svg-icons';
 import logo from '../img/argentBankLogo.png';
 import { logout } from '../slices/profileSlice';
 
+function HeaderConnect() {
+  const userName = useSelector((state) => state.username.userData.body?.userName || '');
 
-
-
-function HeaderConnect({  onUsernameUpdate  }) {
-  const userName = useSelector((state) => state.username.userData.body.userName);
   const dispatch = useDispatch();
 
   const handleLogoutClick = () => {
     dispatch(logout());
     localStorage.removeItem('token');
-  };
-
-  
-
-     
+  }; 
 
   return (
     <nav className="main-nav">
@@ -33,8 +27,6 @@ function HeaderConnect({  onUsernameUpdate  }) {
         />
         <h1 className="sr-only">Argent Bank</h1>
       </Link>
-
-      
         <div className="nav_connect">
           <div className="main-nav-item">
             <FontAwesomeIcon icon={faUserCircle} />
@@ -52,5 +44,4 @@ function HeaderConnect({  onUsernameUpdate  }) {
   );
 }
 
-// Connectez le composant au store Redux
 export default HeaderConnect;

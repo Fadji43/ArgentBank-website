@@ -59,7 +59,7 @@ function User() {
           handleLogout={handleLogout}
           onUsernameUpdate={handleUsernameUpdate} />
         <LayoutUser style={{ backgroundColor: '#12002b' }}>
-          <Welcome userData={userData} username={username} onUsernameUpdate={handleUsernameUpdate} />
+          <Welcome userData={userData} userName={username} onUsernameUpdate={handleUsernameUpdate} />
           <Account />
           <Account />
           <Account />
