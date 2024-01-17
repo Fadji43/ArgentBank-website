@@ -1,21 +1,20 @@
 import React from 'react';
-
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUserCircle, faSignOut } from '@fortawesome/free-solid-svg-icons';
 import logo from '../img/argentBankLogo.png';
-import { logout } from '../slices/profileSlice';
+import { logout } from '../slices/authSlice';
 
 function HeaderConnect() {
-  const userName = useSelector((state) => state.username.userData.body?.userName || '' );
   const dispatch = useDispatch();
+  const userName = useSelector((state) => state.profile.userName || '');
+  console.log('username', userName)
 
   const handleLogoutClick = () => {
     dispatch(logout());
     localStorage.removeItem('token');
   };
-
 
   return (
     <nav className="main-nav">
@@ -39,7 +38,6 @@ function HeaderConnect() {
             </Link>
           </div>
         </div>
- 
     </nav>
   );
 }

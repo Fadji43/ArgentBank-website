@@ -5,7 +5,8 @@ import LayoutUser from '../components/LayoutUser';
 import Welcome from '../components/Welcome';
 import Account from '../components/Account';
 import Footer from '../components/Footer';
-import { fetchProfileSuccess, fetchProfileFailure, logout } from '../slices/profileSlice';
+import { fetchProfileSuccess, fetchProfileFailure } from '../slices/profileSlice';
+import { logout } from '../slices/authSlice'
 
 function User() {
   const dispatch = useDispatch();

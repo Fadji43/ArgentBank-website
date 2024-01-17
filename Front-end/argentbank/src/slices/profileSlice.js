@@ -1,8 +1,9 @@
+// profileAndUsernameSlice.js
 import { createSlice } from '@reduxjs/toolkit';
-
 
 const initialState = {
   userData: {},
+  userName: '',
   loading: false,
   error: null,
   token: null,
@@ -20,6 +21,7 @@ const profileSlice = createSlice({
     fetchProfileSuccess: (state, action) => {
       state.loading = false;
       state.userData = action.payload.userData;
+      state.userName = action.payload.userData.body.userName;
       state.token = action.payload.token;
       state.error = null;
     },
@@ -27,36 +29,29 @@ const profileSlice = createSlice({
       state.loading = false;
       state.error = action.payload;
     },
-    loginSuccess: (state, action) => {
-      state.token = action.payload.token;
-      state.userData = action.payload.userData;
-      state.rememberMe = action.payload.rememberMe || false;
-
-      if (state.rememberMe) {
-        localStorage.setItem('authToken', action.payload.token);
-      }
+    updateUsernameRequest: (state) => {
+      state.loading = true;
+      state.error = null;
     },
-    loginFailure: (state) => {
-      state.token = null;
-      state.userData = {};
+    updateUsernameSuccess: (state, action) => {
+      state.loading = false;
+      state.userName = action.payload.userData.body.userName;
+      state.error = null;
     },
-    logout: (state) => {
-      state.token = null;
-      state.userData = {};
-      state.rememberMe = false;
-      localStorage.removeItem('authToken'); 
+    updateUsernameFailure: (state, action) => {
+      state.loading = false;
+      state.error = action.payload;
     },
   },
 });
 
-// Exporter les actions et le réducteur du slice
 export const {
   fetchProfileRequest,
   fetchProfileSuccess,
   fetchProfileFailure,
-  loginSuccess,
-  loginFailure,
-  logout,
+  updateUsernameRequest,
+  updateUsernameSuccess,
+  updateUsernameFailure,
 } = profileSlice.actions;
 
 export default profileSlice.reducer;
