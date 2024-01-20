@@ -216,6 +216,10 @@ body {
   flex: 1;
 }
 
+.login-failed-line {
+  color: red;
+}
+
 .input-wrapper {
   display: flex;
   flex-direction: column;

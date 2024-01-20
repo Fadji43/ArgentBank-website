@@ -8,7 +8,7 @@ import '../css/main.css';
 function Header() {
     return (
         <nav className="main-nav">
-            <Link to="/signin">
+            <Link to="/">
                 <img
                     className="main-nav-logo-image"
                     src={logo}

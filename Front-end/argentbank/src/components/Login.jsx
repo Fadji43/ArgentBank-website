@@ -6,18 +6,18 @@ import '../css/main.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUserCircle } from '@fortawesome/free-solid-svg-icons';
 
+
 const Login = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [rememberMe, setRememberMe] = useState(false);
+  const [loginFailed, setLoginFailed] = useState(false);
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
   const handleLogin = async (e) => {
     e.preventDefault();
-
-    let token;
 
     try {
       const response = await fetch('http://localhost:3001/api/v1/user/login', {
@@ -30,14 +30,10 @@ const Login = () => {
 
       const data = await response.json();
 
-
       if (response.ok) {
         const token = data.body && data.body.token;
 
         if (token) {
-          // Stockez le nom d'utilisateur dans le localStorage
-          localStorage.setItem('userName', data.body.username);
-
           dispatch(setToken(token));
           navigate('/user');
         } else {
@@ -45,11 +41,12 @@ const Login = () => {
         }
       } else {
         dispatch(loginFailure());
-        alert('Identifiants incorrects');
+        setLoginFailed(true);
       }
 
-      if (rememberMe && token) {
-        localStorage.setItem('authToken', token);
+      if (rememberMe && data.body && data.body.token) {
+        localStorage.setItem('authToken', data.body.token);
+        console.log('localStorage', data.body.token);
       }
 
     } catch (error) {
@@ -97,6 +94,11 @@ const Login = () => {
             { ' ' }Sign In
           </button>
         </form>
+        {loginFailed && (
+          <div className="login-failed-line">
+            <p>Identifiants incorrects</p>
+          </div>
+        )}
       </section>
     </div>
   );

@@ -4,7 +4,7 @@ import { updateUsernameSuccess,  updateUsernameFailure } from '../slices/profile
 debugger
 function Welcome({ userData }) {
   const { firstName, lastName, userName } = userData && userData.body ? userData.body : {};
-  const [editableUsername, setEditableUsername] = useState(userName || '');  // Initialisation avec userName
+  const [editableUsername, setEditableUsername] = useState(userName || ''); 
   const dispatch = useDispatch();
 
   const token = useSelector((state) => state.auth?.token);
