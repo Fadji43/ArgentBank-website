@@ -38,6 +38,7 @@ const Login = () => {
           navigate('/user');
         } else {
           alert('Identifiants incorrects');
+          
         }
       } else {
         dispatch(loginFailure());
@@ -96,7 +97,7 @@ const Login = () => {
         </form>
         {loginFailed && (
           <div className="login-failed-line">
-            <p>Identifiants incorrects</p>
+            <p>Identifiants ou mot de passe incorrects</p>
           </div>
         )}
       </section>

@@ -101,7 +101,8 @@ paths:
           description: Invalid Fields
         '500':
           description: Internal Server Error
-  /user/transactions:
+          
+  /user/transactions/{id}:
     get:
       security:
         - Bearer: []
@@ -111,41 +112,86 @@ paths:
       description: API pour récupérer les transactions de l'utilisateur
       produces:
         - application/json
+      parameters:
+        - name: id
+          in: path
+          required: true
+          type: integer
+          description: ID de la transaction
       responses:
         '200':
           description: Transactions récupérées avec succès
           schema:
-            $ref: '#/definitions/TransactionResponse'  # Assurez-vous que la référence est correcte
+            type: array
+            items:
+              type: object
+              properties:
+                id:
+                  type: integer
+                  description: ID de la transaction
+                date:
+                  type: string
+                  format: date-time
+                  description: Date de la transaction
+                amount:
+                  type: number
+                  description: Montant de la transaction
+                description:
+                  type: string
+                  description: Description de la transaction
+                balance:
+                  type: number
+                  description: Solde après la transaction
+                category:
+                  type: string
+                  description: Catégorie de la transaction
+                note:
+                  type: string
+                  description: Note de la transaction
         '400':
           description: Champs non valides
         '500':
           description: Erreur interne du serveur
-  /user/transactions/description:
+  /user/transactions/description/{id}:
     put:
       security:
         - Bearer: []
       tags:
         - User Module
-      summary: Mettre à jour la description du compte
-      description: API pour mettre à jour la description des comptes de l'utilisateur
-      parameters:
-        - in: body
-          name: body
-          description: Update account description attributes
-          required: true
-          schema:
-            $ref: '#/definitions/AccountDescription'
+      summary: Mettre à jour une transaction
+      description: API pour mettre à jour une transaction de l'utilisateur
       produces:
         - application/json
+      parameters:
+        - name: id
+          in: path
+          required: true
+          type: integer
+          description: ID de la transaction à mettre à jour
+        - in: body
+          name: body
+          required: true
+          schema:
+            type: object
+            properties:
+              category:
+                type: string
+                description: Catégorie de la transaction
+              note:
+                type: string
+                description: Note de la transaction
       responses:
         '200':
-          description: Description du compte mise à jour avec succès
+          description: Transaction mise à jour avec succès
           schema:
-            $ref: '#/definitions/ApiResponse'
+            $ref: '#/definitions/TransactionResponse'
         '400':
           description: Champs non valides
+        '404':
+          description: Transaction non trouvée
         '500':
           description: Erreur interne du serveur
+
 securityDefinitions:
   Bearer:
     type: apiKey
@@ -206,16 +252,25 @@ definitions:
     properties:
       date:
         type: string
-        description: Date de la transaction
+        description: transaction date
       description:
         type: string
-        description: Description de la transaction
+        description: transaction description 
       amount:
         type: number
-        description: Montant de la transaction
+        description: transaction amount
       balance:
         type: number
-        description: Solde du compte après la transaction
+        description: Account balance after transaction
+      transaction type:
+        type: number
+        description: transaction description
+      category:
+        type: string
+        description: transaction amount
+      note:
+        type: string
+        description: transaction note
   TransactionResponse:
     type: object
     properties:
@@ -230,9 +285,9 @@ definitions:
   AccountDescription:
     type: object
     properties:
-      accountId:
+      category :
         type: string
-        description: Identifiant du compte à mettre à jour
-      description:
+        description: transaction category
+      note:
         type: string
-        description: Nouvelle description du compte
+        description: transaction note

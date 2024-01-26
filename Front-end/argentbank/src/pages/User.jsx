@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 import HeaderConnect from '../components/HeaderConnect';
 import LayoutUser from '../components/LayoutUser';
 import Welcome from '../components/Welcome';
@@ -11,11 +12,20 @@ import { logout } from '../slices/authSlice'
 function User() {
   const dispatch = useDispatch();
   const [username, setUsername] = useState('');
+  const navigate = useNavigate();
+  const token = useSelector((state) => state.auth?.token);
+  useEffect(() => {
+    if (!token) {
+      // Redirige vers la page d'accueil si aucun jeton n'est présent
+      navigate('/');
+      console.log('Token from Login:', token);
+    }
+  });
 
   const userData = useSelector((state) => state.profile.userData);
   console.log('userData in User component:', userData);
-  const token = useSelector((state) => state.auth?.token);
-  console.log('Token from Login:', { token });
+  
+  
 
   const handleUsernameUpdate = (newUsername) => {
     setUsername(newUsername); 
