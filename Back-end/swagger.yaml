@@ -109,7 +109,7 @@ paths:
       tags:
         - User Module
       summary: Obtenir les transactions
-      description: API pour récupérer les transactions de l'utilisateur
+      description: API pour récupérer les transactions de l'utilisateur dans une plage de dates
       produces:
         - application/json
       parameters:
@@ -117,7 +117,17 @@ paths:
           in: path
           required: true
           type: integer
-          description: ID de la transaction
+          description: ID de l'utilisateur
+        - name: startDate
+          in: query
+          type: string
+          format: date
+          description: Date de début de la plage de transactions (format YYYY-MM-DD)
+        - name: endDate
+          in: query
+          type: string
+          format: date
+          description: Date de fin de la plage de transactions (format YYYY-MM-DD)
       responses:
         '200':
           description: Transactions récupérées avec succès
@@ -191,7 +201,6 @@ paths:
           description: Transaction non trouvée
         '500':
           description: Erreur interne du serveur
-
 securityDefinitions:
   Bearer:
     type: apiKey
