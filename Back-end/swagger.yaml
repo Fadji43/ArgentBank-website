@@ -101,8 +101,61 @@ paths:
           description: Invalid Fields
         '500':
           description: Internal Server Error
-          
-  /user/transactions/{id}:
+  /user/accounts/{id}:
+    get:
+      security:
+        - Bearer: []
+      tags:
+        - User Module
+      summary: Obtenir les transactions
+      description: API pour récupérer les transactions de l'utilisateur dans une plage de dates
+      produces:
+        - application/json
+      parameters:
+        - name: id
+          in: path
+          required: true
+          type: integer
+          description: ID de l'utilisateur
+        - name: startDate
+          in: query
+          type: string
+          format: date
+          description: Date de début de la plage de transactions (format YYYY-MM-DD)
+        - name: endDate
+          in: query
+          type: string
+          format: date
+          description: Date de fin de la plage de transactions (format YYYY-MM-DD)
+      responses:
+        '200':
+          description: Transactions récupérées avec succès
+          schema:
+            type: array
+            items:
+              type: object
+              properties:
+                id:
+                  type: integer
+                  description: ID de la transaction
+                date:
+                  type: string
+                  format: date-time
+                  description: Date de la transaction
+                amount:
+                  type: number
+                  description: Montant de la transaction
+                description:
+                  type: string
+                  description: Description de la transaction
+                balance:
+                  type: number
+                  description: Solde après la transaction
+        '400':
+          description: Champs non valides
+        '500':
+          description: Erreur interne du serveur
+  /user/accounts/{id}/transactions/{id}:   
     get:
       security:
         - Bearer: []
@@ -162,7 +215,7 @@ paths:
           description: Champs non valides
         '500':
           description: Erreur interne du serveur
-  /user/transactions/description/{id}:
+  /user/accounts/{id}/transactions-update/{id}:
     put:
       security:
         - Bearer: []
@@ -194,7 +247,7 @@ paths:
         '200':
           description: Transaction mise à jour avec succès
           schema:
-            $ref: '#/definitions/TransactionResponse'
+            $ref: '#/definitions/Account-Transaction'
         '400':
           description: Champs non valides
         '404':
@@ -256,7 +309,7 @@ definitions:
     properties:
       userName:
         type: string
-  Transaction:
+  Account:
     type: object
     properties:
       date:
@@ -274,13 +327,7 @@ definitions:
       transaction type:
         type: number
         description: transaction description
-      category:
-        type: string
-        description: transaction amount
-      note:
-        type: string
-        description: transaction note
-  TransactionResponse:
+  Account-Transaction:
     type: object
     properties:
       status:
@@ -288,15 +335,40 @@ definitions:
       message:
         type: string
       body:
-        type: array
-        items:
-          $ref: '#/definitions/Transaction' 
-  AccountDescription:
-    type: object
-    properties:
-      category :
-        type: string
-        description: transaction category
-      note:
-        type: string
-        description: transaction note
+        type: object
+        properties:
+          id:
+            type: integer
+            description: ID de la transaction
+          date:
+            type: string
+            format: date-time
+            description: Date de la transaction
+          amount:
+            type: number
+            description: Montant de la transaction
+          description:
+            type: string
+            description: Description de la transaction
+          balance:
+            type: number
+            description: Solde après la transaction
+          transactionType:
+            type: number
+            description: Type de transaction
+          category:
+            type: string
+            description: Catégorie de la transaction
+          note:
+            type: string
+            description: Note de la transaction
+  AccountDescription-update:
+      type: object
+      properties:
+        category:
+          type: string
+          description: Catégorie de la transaction
+        note:
+          type: string
+          description: Note de la transaction
+
