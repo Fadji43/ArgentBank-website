@@ -215,7 +215,6 @@ paths:
           description: Champs non valides
         '500':
           description: Erreur interne du serveur
-  /user/accounts/{id}/transactions-update/{id}:
     put:
       security:
         - Bearer: []
@@ -243,6 +242,46 @@ paths:
               note:
                 type: string
                 description: Note de la transaction
+      responses:
+        '200':
+          description: Transaction mise à jour avec succès
+          schema:
+            $ref: '#/definitions/Account-Transaction'
+        '400':
+          description: Champs non valides
+        '404':
+          description: Transaction non trouvée
+        '500':
+          description: Erreur interne du serveur
+    delete:  # Ajoutez cette section pour le endpoint DELETE
+      security:
+        - Bearer: []
+      tags:
+        - User Module
+      summary: Supprimer les champs 'note' et 'category' d'une transaction
+      description: API pour supprimer les champs 'note' et 'category' d'une transaction de l'utilisateur
+      produces:
+        - application/json
+      parameters:
+        - name: id
+          in: path
+          required: true
+          type: integer
+          description: ID de la transaction à mettre à jour partiellement
+        - in: body
+          name: body
+          required: true
+          schema:
+            type: object
+            properties:
+              note:
+                type: string
+                description: Note à supprimer
+                default: null  # Utilisez null pour indiquer la suppression
+              category:
+                type: string
+                description: Catégorie à supprimer
+                default: null  # Utilisez null pour indiquer la suppression
       responses:
         '200':
           description: Transaction mise à jour avec succès

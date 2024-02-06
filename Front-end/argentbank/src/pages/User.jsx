@@ -25,8 +25,6 @@ function User() {
   const userData = useSelector((state) => state.profile.userData);
   console.log('userData in User component:', userData);
   
-  
-
   const handleUsernameUpdate = (newUsername) => {
     setUsername(newUsername); 
   };
